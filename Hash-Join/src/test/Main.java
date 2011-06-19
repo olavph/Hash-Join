@@ -1,30 +1,30 @@
 package test;
 
 import join.HashJoin;
+import relation.IncompatibleNumberOfElementsException;
 import relation.Relation;
 import relation.TemporaryRelation;
-import relation.Tuple;
 
 public class Main {
 
 	public static void main(String[] args) {
-		TemporaryRelation cachorros = new TemporaryRelation("ID_Cachorro", "Raça", "Idade_Cachorro", "Cor");
+		TemporaryRelation cachorros = new TemporaryRelation("Cães", "ID_Cachorro", "Raça", "Idade_Cachorro", "Cor");
 		try {
-			cachorros.addTuple(new Tuple(cachorros, 1, "Doberman", 20, "preto"));
-			cachorros.addTuple(new Tuple(cachorros, 2, "Rotweiller", 5, "preto"));
-			cachorros.addTuple(new Tuple(cachorros, 3, "Yorkshire", 3, "cinza"));
-			cachorros.addTuple(new Tuple(cachorros, 4, "Vira-lata", 20, "indefinido"));
-		} catch (Exception e) {
+			cachorros.addTuple(1, "Doberman", 20, "preto");
+			cachorros.addTuple(2, "Rotweiller", 5, "preto");
+			cachorros.addTuple(3, "Yorkshire", 3, "cinza");
+			cachorros.addTuple(4, "Vira-lata", 20, "indefinido");
+		} catch (IncompatibleNumberOfElementsException e) {
 			e.printStackTrace();
 		}
 		
-		TemporaryRelation donos = new TemporaryRelation("ID_Dono", "Nome", "Idade_Dono", "ID_Cachorro");
+		TemporaryRelation donos = new TemporaryRelation("Pessoas", "ID_Dono", "Nome", "Idade_Dono", "ID_Cachorro");
 		try {
-			donos.addTuple(new Tuple(donos, 1, "Bob", 21, 1));
-			donos.addTuple(new Tuple(donos, 1, "Bob", 21, 2));
-			donos.addTuple(new Tuple(donos, 2, "Lily", 19, 3));
-			donos.addTuple(new Tuple(donos, 3, "Zé", 37, 4));
-		} catch (Exception e) {
+			donos.addTuple(1, "Bob", 21, 1);
+			donos.addTuple(1, "Bob", 21, 2);
+			donos.addTuple(2, "Lily", 19, 3);
+			donos.addTuple(3, "Zé", 37, 4);
+		} catch (IncompatibleNumberOfElementsException e) {
 			e.printStackTrace();
 		}
 		

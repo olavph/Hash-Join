@@ -7,9 +7,9 @@ public class Tuple extends HashMap<String, Object> {
 	
 	private static final long serialVersionUID = 1L;
 
-	public Tuple(Relation format, Object ... elements) throws Exception {
+	public Tuple(Relation format, Object ... elements) throws IncompatibleNumberOfElementsException {
 		if(format.getColumns().size() != elements.length)
-			throw new Exception();
+			throw new IncompatibleNumberOfElementsException();
 		
 		for (int i = 0; i < elements.length; i++) {
 			put(format.getColumns().get(i), elements[i]);

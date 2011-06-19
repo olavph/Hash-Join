@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 
+import relation.IncompatibleNumberOfElementsException;
 import relation.Relation;
 import relation.TemporaryRelation;
 import relation.Tuple;
@@ -25,7 +26,8 @@ public class HashJoin extends Join {
 		ArrayList<String> outputColumns = new ArrayList<String>(build.getColumns());
 		outputColumns.addAll(probe.getColumns());
 		outputColumns.remove(joinAttribute);
-		TemporaryRelation output = new TemporaryRelation(outputColumns);
+		String outputName = build.getName() + "-" + probe.getName();
+		TemporaryRelation output = new TemporaryRelation(outputName, outputColumns);
 		
 		Hashtable<Object, Tuple> table = new Hashtable<Object, Tuple>();
 		Iterator<Tuple> iterator = build.iterator();
@@ -49,7 +51,11 @@ public class HashJoin extends Join {
 			if (table.containsKey(current.get(joinAttribute))) {
 				Tuple joinedTuple = new Tuple(table.get(current.get(joinAttribute)));
 				joinedTuple.putAll(current);
-				output.addTuple(joinedTuple);
+				try {
+					output.addTuple(joinedTuple);
+				} catch (IncompatibleNumberOfElementsException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
