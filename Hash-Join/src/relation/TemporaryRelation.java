@@ -7,20 +7,20 @@ import java.util.List;
 public class TemporaryRelation implements Relation {
 	
 	private String name;
-	private ArrayList<String> columns;
+	private List<Attribute> attributes;
 	private ArrayList<Tuple> tuples;
 	
-	public TemporaryRelation(String name, ArrayList<String> columns) {
+	public TemporaryRelation(String name, List<Attribute> attributes) {
 		this.name = name;
-		this.columns = columns;
+		this.attributes = attributes;
 		tuples = new ArrayList<Tuple>();
 	}
 
-	public TemporaryRelation(String name, String ... columns) {
+	public TemporaryRelation(String name, String ... attributeNames) {
 		this.name = name;
-		this.columns = new ArrayList<String>();
-		for (String column : columns) {
-			this.columns.add(column);
+		this.attributes = new ArrayList<Attribute>();
+		for (String attribute : attributeNames) {
+			this.attributes.add(new Attribute(attribute));
 		}
 		tuples = new ArrayList<Tuple>();
 	}
@@ -31,13 +31,23 @@ public class TemporaryRelation implements Relation {
 	}
 	
 	@Override
-	public List<String> getColumns() {
-		return columns;
+	public List<Attribute> getAttributes() {
+		return attributes;
 	}
 
+
+	@Override
+	public Attribute getAttribute(String attributeName) {
+		for (Attribute att : attributes) {
+			if (att.getName().equals(attributeName))
+				return att;
+		}
+		return null;
+	}
+	
 	@Override
 	public boolean addTuple(Tuple t) throws IncompatibleNumberOfElementsException {
-		if (t.size() != columns.size())
+		if (t.size() != attributes.size())
 			throw new IncompatibleNumberOfElementsException();
 		
 		return tuples.add(t);
@@ -51,7 +61,7 @@ public class TemporaryRelation implements Relation {
 
 	@Override
 	public boolean removeTuple(Tuple t) throws IncompatibleNumberOfElementsException {
-		if (t.size() != columns.size())
+		if (t.size() != attributes.size())
 			throw new IncompatibleNumberOfElementsException();
 		
 		return tuples.remove(t);
@@ -70,13 +80,13 @@ public class TemporaryRelation implements Relation {
 	@Override
 	public String toString() {
 		String result = name + ":\n";
-		for (String column : columns) {
-			result += column + "\t";
+		for (Attribute attribute : attributes) {
+			result += attribute.getName() + "\t";
 		}
 		result += "\n";
 		for (Tuple tuple : tuples) {
-			for (String column : columns) {
-				result += tuple.get(column) + "\t";
+			for (Attribute attribute : attributes) {
+				result += tuple.get(attribute) + "\t";
 			}
 			result += "\n";
 		}

@@ -2,8 +2,19 @@ package relation;
 
 public class Attribute {
 
-	public Attribute() {
-		// TODO Auto-generated constructor stub
+	private String name;
+	
+	public Attribute(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
+	
+	@Override
+	public String toString() {
+		return getName();
 	}
 
 }

@@ -3,16 +3,16 @@ package relation;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Tuple extends HashMap<String, Object> {
+public class Tuple extends HashMap<Attribute, Object> {
 	
 	private static final long serialVersionUID = 1L;
 
 	public Tuple(Relation format, Object ... elements) throws IncompatibleNumberOfElementsException {
-		if(format.getColumns().size() != elements.length)
+		if(format.getAttributes().size() != elements.length)
 			throw new IncompatibleNumberOfElementsException();
 		
 		for (int i = 0; i < elements.length; i++) {
-			put(format.getColumns().get(i), elements[i]);
+			put(format.getAttributes().get(i), elements[i]);
 		}
 	}
 	
@@ -20,7 +20,7 @@ public class Tuple extends HashMap<String, Object> {
 		super(initialCapacity);
 	}
 
-	public Tuple(Map<? extends String, ? extends Object> m) {
+	public Tuple(Map<? extends Attribute, ? extends Object> m) {
 		super(m);
 	}
 

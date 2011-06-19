@@ -4,9 +4,10 @@ import java.util.List;
 
 public interface Relation extends Iterable<Tuple> {
 	String getName();
-	List<String> getColumns();
+	List<Attribute> getAttributes();
+	Attribute getAttribute(String attributeName);
 	
-	// t must have the same size as table columns
+	// t must have the same size as relation attributes
 	// returns true if t has been added, false otherwise
 	boolean addTuple(Tuple t) throws IncompatibleNumberOfElementsException;
 	
